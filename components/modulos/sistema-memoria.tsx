@@ -1,10 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { Database, HardDrive, Layers, RefreshCw } from "lucide-react"
+import { Database, HardDrive, Layers, RefreshCw, Play } from "lucide-react"
+import SimuladorMemoria from "../simulador-memoria"
 
 export default function SistemaMemoria() {
   const [seccionActiva, setSeccionActiva] = useState<string | null>(null)
+  const [simuladorVisible, setSimuladorVisible] = useState(false)
 
   return (
     <div className="text-green-500">
@@ -257,6 +259,26 @@ Estímulo Externo/Interno
           `}</pre>
         </div>
       </div>
+
+      {/* Botón del Simulador */}
+      <div className="mt-6 border-t border-green-500 pt-4">
+        <button
+          onClick={() => setSimuladorVisible(true)}
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+        >
+          <Play className="w-4 h-4" />
+          Abrir Simulador de Memoria
+        </button>
+        <p className="text-xs text-gray-400 mt-2">
+          Experimenta con diferentes tipos de memoria y observa cómo se comportan en tiempo real.
+        </p>
+      </div>
+
+      {/* Simulador */}
+      <SimuladorMemoria 
+        visible={simuladorVisible}
+        onCerrar={() => setSimuladorVisible(false)}
+      />
     </div>
   )
 }

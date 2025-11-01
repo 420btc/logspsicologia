@@ -1,10 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { Heart, Tag, Settings, Activity, Brain, Zap, Network, BarChart3, Target, Lightbulb, Shield, Users } from "lucide-react"
+import { Heart, Tag, Settings, Activity, Brain, Zap, Network, BarChart3, Target, Lightbulb, Shield, Users, Play } from "lucide-react"
+import SimuladorEmociones from "../simulador-emociones"
 
 export default function SistemaEmocional() {
   const [seccionActiva, setSeccionActiva] = useState<string | null>(null)
+  const [simuladorVisible, setSimuladorVisible] = useState(false)
   const [emocionSeleccionada, setEmocionSeleccionada] = useState<string | null>(null)
 
   return (
@@ -773,6 +775,26 @@ Miedo            Alegría   Tristeza    Ira     Sorpresa
           `}</pre>
         </div>
       </div>
+
+      {/* Botón del Simulador */}
+      <div className="mt-6 border-t border-green-500 pt-4">
+        <button
+          onClick={() => setSimuladorVisible(true)}
+          className="flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded transition-colors"
+        >
+          <Play className="w-4 h-4" />
+          Abrir Simulador Emocional
+        </button>
+        <p className="text-xs text-gray-400 mt-2">
+          Experimenta con diferentes estados emocionales y observa cómo interactúan en tiempo real.
+        </p>
+      </div>
+
+      {/* Simulador */}
+      <SimuladorEmociones 
+        visible={simuladorVisible}
+        onCerrar={() => setSimuladorVisible(false)}
+      />
     </div>
   )
 }

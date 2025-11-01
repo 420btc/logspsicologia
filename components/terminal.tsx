@@ -14,6 +14,11 @@ import RedNeuronalSocial from "./modulos/red-neuronal-social"
 import ProcesamientoSensorial from "./modulos/procesamiento-sensorial"
 import SistemaRecompensas from "./modulos/sistema-recompensas"
 import SistemaMetacognicion from "./modulos/sistema-metacognicion"
+import TutorialInteractivo from "./tutorial-interactivo"
+import SistemaLogros, { useLogros } from "./sistema-logros"
+import ConexionesModulos from "./conexiones-modulos"
+import CasosEstudio from "./casos-estudio"
+import EfectosVisuales, { AnimacionTexto, NotificacionFlotante } from "./efectos-visuales"
 
 type Modulo = "inicio" | "arquitectura" | "memoria" | "suenos" | "registro" | "emociones" | "personalidad" | "social" | "sensorial" | "recompensas" | "metacognicion" | "ayuda"
 
@@ -28,11 +33,31 @@ export default function Terminal() {
   const [moduloActivo, setModuloActivo] = useState<Modulo>("inicio")
   const [usuario, setUsuario] = useState("Ingeniero")
   const [nivelAcceso, setNivelAcceso] = useState(1)
+  const [tutorialVisible, setTutorialVisible] = useState(false)
+  const [logrosVisible, setLogrosVisible] = useState(false)
+  const [conexionesVisible, setConexionesVisible] = useState(false)
+  const [casosEstudioVisible, setCasosEstudioVisible] = useState(false)
+  const [notificacion, setNotificacion] = useState({
+    mensaje: "",
+    tipo: "info" as "info" | "success" | "warning" | "error",
+    visible: false
+  })
+  const [comandosEjecutados, setComandosEjecutados] = useState<string[]>([])
+  const [modulosVisitados, setModulosVisitados] = useState<string[]>([])
   const terminalRef = useRef<HTMLDivElement>(null)
+  const { logros, desbloquearLogro, actualizarProgreso } = useLogros()
 
   useEffect(() => {
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight
+    }
+  }, [])
+
+  useEffect(() => {
+    // Mostrar tutorial si es la primera vez
+    const tutorialCompletado = localStorage.getItem('tutorial_completado')
+    if (!tutorialCompletado) {
+      setTutorialVisible(true)
     }
   }, [])
 
@@ -125,9 +150,55 @@ export default function Terminal() {
   const procesarComando = (comando: string) => {
     const comandoLower = comando.toLowerCase().trim()
 
+    // Seguimiento de comandos para logros
+    if (!comandosEjecutados.includes(comandoLower)) {
+      setComandosEjecutados(prev => [...prev, comandoLower])
+      
+      // Primer comando
+      if (comandosEjecutados.length === 0) {
+        desbloquearLogro('primer_comando')
+        agregarLog("🏆 ¡Logro desbloqueado: Primer Contacto!")
+      }
+      
+      // Maestro de comandos
+      if (comandosEjecutados.length + 1 >= 15) {
+        desbloquearLogro('maestro_comandos')
+        agregarLog("🏆 ¡Logro desbloqueado: Maestro de Comandos!")
+      }
+    }
+
     // Comandos globales disponibles en cualquier módulo
     if (comandoLower === "ayuda") {
       mostrarAyuda()
+      return
+    }
+
+    if (comandoLower === "tutorial") {
+      setTutorialVisible(true)
+      agregarLog("Abriendo tutorial interactivo...")
+      return
+    }
+
+    if (comandoLower === "logros") {
+      setLogrosVisible(true)
+      agregarLog("Abriendo sistema de logros...")
+      return
+    }
+
+    if (comandoLower === "progreso") {
+      mostrarProgreso()
+      return
+    }
+
+    if (comandoLower === "conexiones") {
+      setConexionesVisible(true)
+      agregarLog("Abriendo mapa de conexiones entre módulos...")
+      return
+    }
+
+    if (comandoLower === "casos" || comandoLower === "estudios") {
+      setCasosEstudioVisible(true)
+      agregarLog("Abriendo casos de estudio prácticos...")
       return
     }
 
@@ -153,32 +224,27 @@ export default function Terminal() {
     }
 
     if (comandoLower === "arquitectura") {
-      setModuloActivo("arquitectura")
-      agregarLog("Accediendo al módulo de Arquitectura del Sistema...")
+      cambiarModulo("arquitectura", "Accediendo al módulo de Arquitectura del Sistema...")
       return
     }
 
     if (comandoLower === "memoria") {
-      setModuloActivo("memoria")
-      agregarLog("Accediendo al módulo de Sistema de Memoria...")
+      cambiarModulo("memoria", "Accediendo al módulo de Sistema de Memoria...")
       return
     }
 
     if (comandoLower === "suenos" || comandoLower === "sueños") {
-      setModuloActivo("suenos")
-      agregarLog("Accediendo al módulo de Procesos de Mantenimiento (Sueños)...")
+      cambiarModulo("suenos", "Accediendo al módulo de Procesos de Mantenimiento (Sueños)...")
       return
     }
 
     if (comandoLower === "registro") {
-      setModuloActivo("registro")
-      agregarLog("Accediendo al módulo de Registro Temporal (Blockchain)...")
+      cambiarModulo("registro", "Accediendo al módulo de Registro Temporal (Blockchain)...")
       return
     }
 
     if (comandoLower === "emociones") {
-      setModuloActivo("emociones")
-      agregarLog("Accediendo al módulo de Sistema Emocional...")
+      cambiarModulo("emociones", "Accediendo al módulo de Sistema Emocional...")
       return
     }
 
@@ -267,6 +333,52 @@ export default function Terminal() {
         agregarLog(`Comando no reconocido: ${comando}`)
         agregarLog('Escribe "ayuda" para ver los comandos disponibles.')
     }
+  }
+
+  // Funciones auxiliares para logros y navegación
+  const cambiarModulo = (modulo: Modulo, mensaje: string) => {
+    setModuloActivo(modulo)
+    agregarLog(mensaje)
+    
+    // Seguimiento de módulos visitados para logros
+    if (!modulosVisitados.includes(modulo)) {
+      setModulosVisitados(prev => [...prev, modulo])
+      
+      // Explorador novato (3 módulos)
+      if (modulosVisitados.length + 1 >= 3) {
+        desbloquearLogro('explorador_novato')
+        agregarLog("🏆 ¡Logro desbloqueado: Explorador Novato!")
+      }
+      
+      // Psicólogo digital (todos los módulos)
+      if (modulosVisitados.length + 1 >= 10) {
+        desbloquearLogro('psicologo_digital')
+        agregarLog("🏆 ¡Logro desbloqueado: Psicólogo Digital!")
+      }
+    }
+  }
+
+  const mostrarProgreso = () => {
+    agregarLog("=== PROGRESO DE EXPLORACIÓN ===")
+    agregarLog(`Comandos únicos ejecutados: ${comandosEjecutados.length}`)
+    agregarLog(`Módulos visitados: ${modulosVisitados.length}/10`)
+    
+    const logrosDesbloqueados = logros.filter(l => l.desbloqueado).length
+    const puntosTotales = logros.filter(l => l.desbloqueado).reduce((sum, l) => sum + l.puntos, 0)
+    
+    agregarLog(`Logros desbloqueados: ${logrosDesbloqueados}/${logros.length}`)
+    agregarLog(`Puntos totales: ${puntosTotales}`)
+    agregarLog("Usa 'logros' para ver detalles completos")
+  }
+
+  const ejecutarComandoSugerido = (comando: string) => {
+    setInput(comando)
+    // Simular envío del formulario
+    setTimeout(() => {
+      setHistorial((prev) => [...prev, `> ${comando}`])
+      procesarComando(comando)
+      setInput("")
+    }, 100)
   }
 
   const procesarComandoArquitectura = (comando: string) => {
@@ -572,6 +684,11 @@ export default function Terminal() {
     agregarLog("=== AYUDA DEL SISTEMA ===")
     agregarLog("Comandos globales:")
     agregarLog("- ayuda: Muestra esta información")
+    agregarLog("- tutorial: Abre el tutorial interactivo")
+    agregarLog("- logros: Abre el sistema de logros")
+    agregarLog("- progreso: Muestra tu progreso de exploración")
+    agregarLog("- conexiones: Muestra el mapa de conexiones entre módulos")
+    agregarLog("- casos/estudios: Abre casos de estudio prácticos")
     agregarLog("- limpiar/clear: Limpia la terminal")
     agregarLog("- nombre [nuevo nombre]: Cambia tu nombre de usuario")
     agregarLog("- inicio/home: Vuelve al módulo principal")
@@ -704,6 +821,15 @@ export default function Terminal() {
 
   const agregarLog = (mensaje: string) => {
     setHistorial((prev) => [...prev, mensaje])
+    
+    // Mostrar notificación visual para logros
+    if (mensaje.includes("🏆")) {
+      setNotificacion({
+        mensaje: mensaje.replace("🏆 ", ""),
+        tipo: "success" as const,
+        visible: true
+      })
+    }
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -743,7 +869,8 @@ export default function Terminal() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <EfectosVisuales tipo="terminal">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div className="md:col-span-2">
         <div className="bg-black border border-green-500 rounded-lg p-4 h-[70vh] flex flex-col">
           <div className="flex items-center justify-between mb-2 border-b border-green-500 pb-2">
@@ -879,6 +1006,48 @@ export default function Terminal() {
           </div>
         )}
       </div>
-    </div>
+
+      {/* Tutorial Interactivo */}
+      <TutorialInteractivo
+        visible={tutorialVisible}
+        onCerrar={() => setTutorialVisible(false)}
+        onComandoSugerido={ejecutarComandoSugerido}
+      />
+
+      {/* Sistema de Logros */}
+      <SistemaLogros
+        visible={logrosVisible}
+        onCerrar={() => setLogrosVisible(false)}
+      />
+
+      {/* Conexiones entre Módulos */}
+      <ConexionesModulos
+        visible={conexionesVisible}
+        onCerrar={() => setConexionesVisible(false)}
+        onNavegar={(modulo) => {
+          cambiarModulo(modulo as Modulo, `Navegando a módulo ${modulo} desde conexiones`)
+          setConexionesVisible(false)
+        }}
+      />
+
+      {/* Casos de Estudio */}
+      <CasosEstudio
+        visible={casosEstudioVisible}
+        onCerrar={() => setCasosEstudioVisible(false)}
+        onNavegar={(modulo) => {
+          cambiarModulo(modulo as Modulo, `Navegando a módulo ${modulo} desde casos de estudio`)
+          setCasosEstudioVisible(false)
+        }}
+      />
+
+      {/* Notificaciones Flotantes */}
+      <NotificacionFlotante
+        mensaje={notificacion.mensaje}
+        tipo={notificacion.tipo}
+        visible={notificacion.visible}
+        onCerrar={() => setNotificacion((prev) => ({ ...prev, visible: false }))}
+      />
+      </div>
+    </EfectosVisuales>
   )
 }
