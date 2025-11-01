@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Brain, Eye, Lightbulb, Layers, Compass, Mirror, Cog, BookOpen } from "lucide-react"
+import { Brain, Eye, Lightbulb, Layers, Compass, Search, Cog, BookOpen } from "lucide-react"
 
 export default function SistemaMetacognicion() {
   const [seccionActiva, setSeccionActiva] = useState<string | null>(null)
@@ -96,7 +96,7 @@ export default function SistemaMetacognicion() {
           onClick={() => setSeccionActiva(seccionActiva === "sesgos" ? null : "sesgos")}
           className={`border border-green-500 rounded p-3 cursor-pointer ${seccionActiva === "sesgos" ? "bg-green-900/20" : "hover:bg-green-900/10"}`}
         >
-          <Mirror className="mb-2" />
+          <Search className="mb-2" />
           <h4 className="font-bold">Sesgos Metacognitivos</h4>
           <p className="text-xs">Errores de autoevaluación</p>
         </div>
