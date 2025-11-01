@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Heart, Tag, Settings, Activity } from "lucide-react"
+import { Heart, Tag, Settings, Activity, Brain, Zap, Network, BarChart3, Target, Lightbulb, Shield, Users } from "lucide-react"
 
 export default function SistemaEmocional() {
   const [seccionActiva, setSeccionActiva] = useState<string | null>(null)
@@ -12,7 +12,7 @@ export default function SistemaEmocional() {
       <h3 className="text-xl mb-4">Metadatos del Sistema: Las Emociones</h3>
       <p className="mb-4">
         Las emociones funcionan como un sistema de metadatos que etiquetan, priorizan y organizan la información en el
-        sistema mental.
+        sistema mental. Constituyen algoritmos evolutivos especializados que optimizan la supervivencia y adaptación social.
       </p>
 
       <div className="grid grid-cols-2 gap-4 mb-6">
@@ -35,6 +35,42 @@ export default function SistemaEmocional() {
         </div>
 
         <div
+          onClick={() => setSeccionActiva(seccionActiva === "neurociencia" ? null : "neurociencia")}
+          className={`border border-green-500 rounded p-3 cursor-pointer ${seccionActiva === "neurociencia" ? "bg-green-900/20" : "hover:bg-green-900/10"}`}
+        >
+          <Brain className="mb-2" />
+          <h4 className="font-bold">Neurociencia Afectiva</h4>
+          <p className="text-xs">Bases neurológicas</p>
+        </div>
+
+        <div
+          onClick={() => setSeccionActiva(seccionActiva === "neurotransmisores" ? null : "neurotransmisores")}
+          className={`border border-green-500 rounded p-3 cursor-pointer ${seccionActiva === "neurotransmisores" ? "bg-green-900/20" : "hover:bg-green-900/10"}`}
+        >
+          <Zap className="mb-2" />
+          <h4 className="font-bold">Neurotransmisores</h4>
+          <p className="text-xs">Química emocional</p>
+        </div>
+
+        <div
+          onClick={() => setSeccionActiva(seccionActiva === "regulacion" ? null : "regulacion")}
+          className={`border border-green-500 rounded p-3 cursor-pointer ${seccionActiva === "regulacion" ? "bg-green-900/20" : "hover:bg-green-900/10"}`}
+        >
+          <Target className="mb-2" />
+          <h4 className="font-bold">Regulación Emocional</h4>
+          <p className="text-xs">Control y modulación</p>
+        </div>
+
+        <div
+          onClick={() => setSeccionActiva(seccionActiva === "inteligencia" ? null : "inteligencia")}
+          className={`border border-green-500 rounded p-3 cursor-pointer ${seccionActiva === "inteligencia" ? "bg-green-900/20" : "hover:bg-green-900/10"}`}
+        >
+          <Lightbulb className="mb-2" />
+          <h4 className="font-bold">Inteligencia Emocional</h4>
+          <p className="text-xs">Competencias emocionales</p>
+        </div>
+
+        <div
           onClick={() => setSeccionActiva(seccionActiva === "propiedades" ? null : "propiedades")}
           className={`border border-green-500 rounded p-3 cursor-pointer ${seccionActiva === "propiedades" ? "bg-green-900/20" : "hover:bg-green-900/10"}`}
         >
@@ -52,6 +88,205 @@ export default function SistemaEmocional() {
           <p className="text-xs">Exploración de emociones</p>
         </div>
       </div>
+
+      {seccionActiva === "neurociencia" && (
+        <div className="border border-green-500 rounded p-4 mb-4 bg-black/50">
+          <h4 className="font-bold mb-2">Neurociencia Afectiva</h4>
+          <p className="mb-2">Bases neurológicas del procesamiento emocional:</p>
+
+          <div className="space-y-3">
+            <div className="border border-green-500 p-3 rounded">
+              <h5 className="font-bold text-sm mb-2">Sistema Límbico</h5>
+              <ul className="text-xs space-y-1">
+                <li><span className="font-bold">Amígdala:</span> Detección de amenazas y procesamiento del miedo</li>
+                <li><span className="font-bold">Hipocampo:</span> Memoria emocional y contextualización</li>
+                <li><span className="font-bold">Hipotálamo:</span> Respuestas autonómicas y hormonales</li>
+                <li><span className="font-bold">Núcleo accumbens:</span> Recompensa y motivación</li>
+              </ul>
+            </div>
+
+            <div className="border border-green-500 p-3 rounded">
+              <h5 className="font-bold text-sm mb-2">Corteza Prefrontal</h5>
+              <ul className="text-xs space-y-1">
+                <li><span className="font-bold">CPF ventromedial:</span> Regulación emocional y toma de decisiones</li>
+                <li><span className="font-bold">CPF dorsolateral:</span> Control ejecutivo y memoria de trabajo</li>
+                <li><span className="font-bold">Corteza orbitofrontal:</span> Evaluación de recompensas y castigos</li>
+                <li><span className="font-bold">Corteza cingulada anterior:</span> Monitoreo de conflictos y empatía</li>
+              </ul>
+            </div>
+
+            <div className="border border-green-500 p-3 rounded">
+              <h5 className="font-bold text-sm mb-2">Circuitos Neuronales</h5>
+              <ul className="text-xs space-y-1">
+                <li><span className="font-bold">Circuito del miedo:</span> Amígdala → Hipotálamo → Respuesta de estrés</li>
+                <li><span className="font-bold">Circuito de recompensa:</span> VTA → Núcleo accumbens → Dopamina</li>
+                <li><span className="font-bold">Circuito de regulación:</span> CPF → Amígdala → Control emocional</li>
+                <li><span className="font-bold">Red de saliencia:</span> Ínsula → Detección de estímulos relevantes</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-4 p-3 border border-dashed border-green-500 bg-green-900/10 text-sm">
+            <p className="font-bold">Análisis de depuración:</p>
+            <p>
+              Los trastornos emocionales pueden mapearse a disfunciones específicas en estos circuitos: 
+              hiperactivación de la amígdala en ansiedad, hipoactivación del núcleo accumbens en depresión, 
+              o déficits en la CPF en trastornos de regulación emocional.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {seccionActiva === "neurotransmisores" && (
+        <div className="border border-green-500 rounded p-4 mb-4 bg-black/50">
+          <h4 className="font-bold mb-2">Neurotransmisores y Química Emocional</h4>
+          <p className="mb-2">Los neurotransmisores actúan como protocolos de comunicación del sistema emocional:</p>
+
+          <div className="space-y-3">
+            <div className="border border-green-500 p-3 rounded">
+              <h5 className="font-bold text-sm mb-2">Serotonina (5-HT)</h5>
+              <ul className="text-xs space-y-1">
+                <li><span className="font-bold">Función:</span> Regulación del estado de ánimo y bienestar</li>
+                <li><span className="font-bold">Efectos:</span> Estabilidad emocional, control de impulsos</li>
+                <li><span className="font-bold">Déficit:</span> Depresión, ansiedad, agresividad</li>
+                <li><span className="font-bold">Exceso:</span> Síndrome serotoninérgico, rigidez emocional</li>
+              </ul>
+            </div>
+
+            <div className="border border-green-500 p-3 rounded">
+              <h5 className="font-bold text-sm mb-2">Dopamina (DA)</h5>
+              <ul className="text-xs space-y-1">
+                <li><span className="font-bold">Función:</span> Motivación, recompensa y aprendizaje</li>
+                <li><span className="font-bold">Efectos:</span> Búsqueda de objetivos, placer anticipatorio</li>
+                <li><span className="font-bold">Déficit:</span> Anhedonia, apatía, falta de motivación</li>
+                <li><span className="font-bold">Exceso:</span> Comportamientos compulsivos, psicosis</li>
+              </ul>
+            </div>
+
+            <div className="border border-green-500 p-3 rounded">
+              <h5 className="font-bold text-sm mb-2">Noradrenalina (NA)</h5>
+              <ul className="text-xs space-y-1">
+                <li><span className="font-bold">Función:</span> Alerta, atención y respuesta al estrés</li>
+                <li><span className="font-bold">Efectos:</span> Vigilancia, preparación para la acción</li>
+                <li><span className="font-bold">Déficit:</span> Fatiga, falta de concentración</li>
+                <li><span className="font-bold">Exceso:</span> Ansiedad, hipervigilancia, pánico</li>
+              </ul>
+            </div>
+
+            <div className="border border-green-500 p-3 rounded">
+              <h5 className="font-bold text-sm mb-2">GABA y Glutamato</h5>
+              <ul className="text-xs space-y-1">
+                <li><span className="font-bold">GABA:</span> Inhibición, calma, reducción de ansiedad</li>
+                <li><span className="font-bold">Glutamato:</span> Excitación, aprendizaje, plasticidad</li>
+                <li><span className="font-bold">Balance:</span> Equilibrio excitación/inhibición crucial</li>
+                <li><span className="font-bold">Desequilibrio:</span> Ansiedad, epilepsia, trastornos del ánimo</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-4 p-3 border border-dashed border-green-500 bg-green-900/10 text-sm">
+            <p className="font-bold">Análisis de depuración:</p>
+            <p>
+              Los fármacos psicotrópicos actúan como "parches" del sistema, modificando la disponibilidad 
+              de neurotransmisores para corregir desequilibrios específicos en los circuitos emocionales.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {seccionActiva === "regulacion" && (
+        <div className="border border-green-500 rounded p-4 mb-4 bg-black/50">
+          <h4 className="font-bold mb-2">Regulación Emocional</h4>
+          <p className="mb-2">Estrategias y mecanismos para modular las respuestas emocionales:</p>
+
+          <div className="space-y-3">
+            <div className="border border-green-500 p-3 rounded">
+              <h5 className="font-bold text-sm mb-2">Estrategias Cognitivas</h5>
+              <ul className="text-xs space-y-1">
+                <li><span className="font-bold">Reevaluación cognitiva:</span> Reinterpretación del significado emocional</li>
+                <li><span className="font-bold">Distanciamiento:</span> Perspectiva de tercera persona</li>
+                <li><span className="font-bold">Aceptación:</span> Reconocimiento sin resistencia</li>
+                <li><span className="font-bold">Mindfulness:</span> Atención plena al momento presente</li>
+              </ul>
+            </div>
+
+            <div className="border border-green-500 p-3 rounded">
+              <h5 className="font-bold text-sm mb-2">Estrategias Conductuales</h5>
+              <ul className="text-xs space-y-1">
+                <li><span className="font-bold">Modificación situacional:</span> Cambio del contexto emocional</li>
+                <li><span className="font-bold">Despliegue atencional:</span> Redirección del foco</li>
+                <li><span className="font-bold">Expresión emocional:</span> Comunicación de estados internos</li>
+                <li><span className="font-bold">Activación conductual:</span> Acciones que modifican el estado</li>
+              </ul>
+            </div>
+
+            <div className="border border-green-500 p-3 rounded">
+              <h5 className="font-bold text-sm mb-2">Regulación Automática vs. Controlada</h5>
+              <ul className="text-xs space-y-1">
+                <li><span className="font-bold">Automática:</span> Habituación, supresión inconsciente</li>
+                <li><span className="font-bold">Controlada:</span> Esfuerzo consciente, uso de recursos</li>
+                <li><span className="font-bold">Eficiencia:</span> La regulación automática consume menos recursos</li>
+                <li><span className="font-bold">Flexibilidad:</span> La controlada permite mayor adaptación</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-4 p-3 border border-dashed border-green-500 bg-green-900/10 text-sm">
+            <p className="font-bold">Análisis de depuración:</p>
+            <p>
+              La regulación emocional eficaz requiere un balance entre estrategias automáticas y controladas, 
+              similar a la optimización de código que combina rutinas eficientes con flexibilidad adaptativa.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {seccionActiva === "inteligencia" && (
+        <div className="border border-green-500 rounded p-4 mb-4 bg-black/50">
+          <h4 className="font-bold mb-2">Inteligencia Emocional</h4>
+          <p className="mb-2">Competencias para el procesamiento eficiente de información emocional:</p>
+
+          <div className="space-y-3">
+            <div className="border border-green-500 p-3 rounded">
+              <h5 className="font-bold text-sm mb-2">Modelo de Cuatro Ramas (Mayer-Salovey)</h5>
+              <ul className="text-xs space-y-1">
+                <li><span className="font-bold">1. Percepción:</span> Identificación precisa de emociones</li>
+                <li><span className="font-bold">2. Uso:</span> Utilización de emociones para facilitar el pensamiento</li>
+                <li><span className="font-bold">3. Comprensión:</span> Análisis de causas y consecuencias emocionales</li>
+                <li><span className="font-bold">4. Regulación:</span> Manejo efectivo de emociones propias y ajenas</li>
+              </ul>
+            </div>
+
+            <div className="border border-green-500 p-3 rounded">
+              <h5 className="font-bold text-sm mb-2">Competencias Intrapersonales</h5>
+              <ul className="text-xs space-y-1">
+                <li><span className="font-bold">Autoconciencia:</span> Monitoreo de estados emocionales internos</li>
+                <li><span className="font-bold">Autorregulación:</span> Control de impulsos y gestión del estrés</li>
+                <li><span className="font-bold">Automotivación:</span> Orientación hacia objetivos a largo plazo</li>
+                <li><span className="font-bold">Resiliencia:</span> Recuperación ante adversidades</li>
+              </ul>
+            </div>
+
+            <div className="border border-green-500 p-3 rounded">
+              <h5 className="font-bold text-sm mb-2">Competencias Interpersonales</h5>
+              <ul className="text-xs space-y-1">
+                <li><span className="font-bold">Empatía:</span> Comprensión de estados emocionales ajenos</li>
+                <li><span className="font-bold">Habilidades sociales:</span> Manejo de relaciones interpersonales</li>
+                <li><span className="font-bold">Comunicación emocional:</span> Expresión clara de estados afectivos</li>
+                <li><span className="font-bold">Influencia:</span> Capacidad de modular emociones grupales</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-4 p-3 border border-dashed border-green-500 bg-green-900/10 text-sm">
+            <p className="font-bold">Análisis de depuración:</p>
+            <p>
+              La inteligencia emocional puede conceptualizarse como la eficiencia del sistema operativo emocional: 
+              mayor velocidad de procesamiento, menor uso de recursos y mejor gestión de errores.
+            </p>
+          </div>
+        </div>
+      )}
 
       {seccionActiva === "funciones" && (
         <div className="border border-green-500 rounded p-4 mb-4 bg-black/50">
@@ -435,8 +670,79 @@ export default function SistemaEmocional() {
 
       <div className="mt-4 text-xs text-green-400">
         <p>Escribe "funciones" en la terminal para ver información sobre las funciones de las emociones.</p>
-        <p>Usa "taxonomia", "propiedades" o "analizar" para explorar diferentes aspectos del sistema emocional.</p>
+        <p>Usa "taxonomia", "propiedades", "neurociencia", "neurotransmisores", "regulacion", "inteligencia" o "analizar" para explorar diferentes aspectos del sistema emocional.</p>
         <p>También puedes escribir el nombre de una emoción específica para analizarla en detalle.</p>
+        <p>Prueba "simular [situación]" para ejecutar una simulación emocional interactiva.</p>
+      </div>
+
+      <div className="mt-6 border-t border-green-500 pt-4">
+        <h4 className="font-bold mb-2">Simulador Emocional Interactivo</h4>
+        <div className="border border-green-500 p-3 mb-4">
+          <p className="text-sm mb-3">Selecciona una situación para simular la respuesta emocional:</p>
+          <div className="grid grid-cols-2 gap-2 mb-4">
+            {[
+              { situacion: "Entrevista de trabajo", emociones: ["Ansiedad", "Esperanza", "Determinación"] },
+              { situacion: "Ruptura amorosa", emociones: ["Tristeza", "Ira", "Alivio"] },
+              { situacion: "Logro importante", emociones: ["Alegría", "Orgullo", "Gratitud"] },
+              { situacion: "Conflicto familiar", emociones: ["Frustración", "Culpa", "Amor"] }
+            ].map((escenario, index) => (
+              <button
+                key={index}
+                onClick={() => setEmocionSeleccionada(escenario.situacion.toLowerCase().replace(/\s+/g, '_'))}
+                className="border border-green-500 p-2 text-xs rounded hover:bg-green-900/20 text-left"
+              >
+                <div className="font-bold">{escenario.situacion}</div>
+                <div className="text-green-400">{escenario.emociones.join(", ")}</div>
+              </button>
+            ))}
+          </div>
+
+          {emocionSeleccionada && emocionSeleccionada.includes('_') && (
+            <div className="border border-green-500 p-3 bg-black/30 rounded">
+              <h5 className="font-bold mb-2 uppercase">{emocionSeleccionada.replace(/_/g, ' ')}</h5>
+              
+              {emocionSeleccionada === "entrevista_de_trabajo" && (
+                <div className="space-y-2 text-xs">
+                  <div><span className="font-bold">Fase 1 - Anticipación:</span> Ansiedad (70%), Esperanza (60%)</div>
+                  <div><span className="font-bold">Respuesta fisiológica:</span> ↑ Cortisol, ↑ Frecuencia cardíaca</div>
+                  <div><span className="font-bold">Estrategias de regulación:</span> Respiración profunda, visualización positiva</div>
+                  <div><span className="font-bold">Fase 2 - Durante:</span> Concentración (80%), Nerviosismo (40%)</div>
+                  <div><span className="font-bold">Fase 3 - Post-entrevista:</span> Alivio (70%), Incertidumbre (50%)</div>
+                </div>
+              )}
+
+              {emocionSeleccionada === "ruptura_amorosa" && (
+                <div className="space-y-2 text-xs">
+                  <div><span className="font-bold">Fase 1 - Shock inicial:</span> Negación (90%), Confusión (80%)</div>
+                  <div><span className="font-bold">Respuesta neurológica:</span> ↓ Dopamina, ↑ Cortisol, activación amígdala</div>
+                  <div><span className="font-bold">Fase 2 - Procesamiento:</span> Tristeza (85%), Ira (60%)</div>
+                  <div><span className="font-bold">Fase 3 - Adaptación:</span> Aceptación (70%), Crecimiento personal (40%)</div>
+                  <div><span className="font-bold">Duración estimada:</span> 2-6 meses para procesamiento completo</div>
+                </div>
+              )}
+
+              {emocionSeleccionada === "logro_importante" && (
+                <div className="space-y-2 text-xs">
+                  <div><span className="font-bold">Fase 1 - Realización:</span> Sorpresa (70%), Alegría (90%)</div>
+                  <div><span className="font-bold">Respuesta neurológica:</span> ↑ Dopamina, ↑ Serotonina, activación núcleo accumbens</div>
+                  <div><span className="font-bold">Fase 2 - Celebración:</span> Euforia (80%), Gratitud (75%)</div>
+                  <div><span className="font-bold">Fase 3 - Integración:</span> Orgullo (85%), Motivación futura (70%)</div>
+                  <div><span className="font-bold">Efecto a largo plazo:</span> Aumento de autoeficacia y confianza</div>
+                </div>
+              )}
+
+              {emocionSeleccionada === "conflicto_familiar" && (
+                <div className="space-y-2 text-xs">
+                  <div><span className="font-bold">Fase 1 - Escalada:</span> Frustración (80%), Ira (70%)</div>
+                  <div><span className="font-bold">Respuesta fisiológica:</span> ↑ Noradrenalina, tensión muscular</div>
+                  <div><span className="font-bold">Fase 2 - Conflicto:</span> Defensividad (90%), Dolor emocional (60%)</div>
+                  <div><span className="font-bold">Fase 3 - Resolución:</span> Culpa (50%), Amor subyacente (80%)</div>
+                  <div><span className="font-bold">Estrategias:</span> Comunicación asertiva, tiempo de enfriamiento</div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="mt-6 border-t border-green-500 pt-4">

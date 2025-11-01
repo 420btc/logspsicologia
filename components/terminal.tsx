@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
-import { ChevronRight, TerminalIcon, Brain, Database, Moon, Link, Heart, User, Users, Eye, Zap, Lightbulb } from "lucide-react"
+import { ChevronRight, TerminalIcon, Brain, Database, Moon, Link, Heart, User, Users, Eye, Zap, Lightbulb, ArrowLeft } from "lucide-react"
 import ArquitecturaSistema from "./modulos/arquitectura-sistema"
 import SistemaMemoria from "./modulos/sistema-memoria"
 import ProcesosSuenos from "./modulos/procesos-suenos"
@@ -780,31 +780,47 @@ export default function Terminal() {
       </div>
 
       <div className="bg-black border border-green-500 rounded-lg p-4 h-[70vh] overflow-y-auto">
-        <div className="flex items-center mb-4 border-b border-green-500 pb-2">
-          {moduloActivo === "arquitectura" && <Brain className="mr-2" />}
-          {moduloActivo === "memoria" && <Database className="mr-2" />}
-          {moduloActivo === "suenos" && <Moon className="mr-2" />}
-          {moduloActivo === "registro" && <Link className="mr-2" />}
-          {moduloActivo === "emociones" && <Heart className="mr-2" />}
-          {moduloActivo === "personalidad" && <User className="mr-2" />}
-          {moduloActivo === "social" && <Users className="mr-2" />}
-          {moduloActivo === "sensorial" && <Eye className="mr-2" />}
-          {moduloActivo === "recompensas" && <Zap className="mr-2" />}
-          {moduloActivo === "metacognicion" && <Lightbulb className="mr-2" />}
+        <div className="flex items-center justify-between mb-4 border-b border-green-500 pb-2">
+          <div className="flex items-center">
+            {moduloActivo === "arquitectura" && <Brain className="mr-2" />}
+            {moduloActivo === "memoria" && <Database className="mr-2" />}
+            {moduloActivo === "suenos" && <Moon className="mr-2" />}
+            {moduloActivo === "registro" && <Link className="mr-2" />}
+            {moduloActivo === "emociones" && <Heart className="mr-2" />}
+            {moduloActivo === "personalidad" && <User className="mr-2" />}
+            {moduloActivo === "social" && <Users className="mr-2" />}
+            {moduloActivo === "sensorial" && <Eye className="mr-2" />}
+            {moduloActivo === "recompensas" && <Zap className="mr-2" />}
+            {moduloActivo === "metacognicion" && <Lightbulb className="mr-2" />}
 
-          <span>
-            {moduloActivo === "inicio" && "Panel de Control"}
-            {moduloActivo === "arquitectura" && "Arquitectura del Sistema"}
-            {moduloActivo === "memoria" && "Sistema de Memoria"}
-            {moduloActivo === "suenos" && "Procesos de Mantenimiento (Sueños)"}
-            {moduloActivo === "registro" && "Registro Temporal (Blockchain)"}
-            {moduloActivo === "emociones" && "Sistema Emocional"}
-            {moduloActivo === "personalidad" && "Sistema de Personalidad"}
-            {moduloActivo === "social" && "Red Neuronal Social"}
-            {moduloActivo === "sensorial" && "Procesamiento Sensorial"}
-            {moduloActivo === "recompensas" && "Sistema de Recompensas"}
-            {moduloActivo === "metacognicion" && "Sistema de Metacognición"}
-          </span>
+            <span>
+              {moduloActivo === "inicio" && "Panel de Control"}
+              {moduloActivo === "arquitectura" && "Arquitectura del Sistema"}
+              {moduloActivo === "memoria" && "Sistema de Memoria"}
+              {moduloActivo === "suenos" && "Procesos de Mantenimiento (Sueños)"}
+              {moduloActivo === "registro" && "Registro Temporal (Blockchain)"}
+              {moduloActivo === "emociones" && "Sistema Emocional"}
+              {moduloActivo === "personalidad" && "Sistema de Personalidad"}
+              {moduloActivo === "social" && "Red Neuronal Social"}
+              {moduloActivo === "sensorial" && "Procesamiento Sensorial"}
+              {moduloActivo === "recompensas" && "Sistema de Recompensas"}
+              {moduloActivo === "metacognicion" && "Sistema de Metacognición"}
+            </span>
+          </div>
+          
+          {moduloActivo !== "inicio" && (
+            <button
+              onClick={() => {
+                setModuloActivo("inicio")
+                agregarLog("Regresando al módulo principal...")
+              }}
+              className="flex items-center px-3 py-1 bg-green-900/20 border border-green-500 rounded hover:bg-green-900/40 transition-colors text-sm"
+              title="Volver al inicio"
+            >
+              <ArrowLeft className="w-4 h-4 mr-1" />
+              Atrás
+            </button>
+          )}
         </div>
 
         {renderModuloActivo()}
